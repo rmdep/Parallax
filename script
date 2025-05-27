@@ -1,0 +1,36 @@
+using UnityEngine;
+
+public class DestroyClue : MonoBehaviour
+{
+    public GameObject uiToActivate; // Objek UI yang akan diaktifkan
+    private bool playerInRange = false; // Apakah player berada dalam jangkauan
+
+    private void Update()
+    {
+        if (playerInRange && Input.GetKeyDown(KeyCode.E))
+        {
+            if (uiToActivate != null)
+            {
+                uiToActivate.SetActive(true); // Tampilkan UI
+            }
+
+            Destroy(gameObject); // Hancurkan item di world
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+}
